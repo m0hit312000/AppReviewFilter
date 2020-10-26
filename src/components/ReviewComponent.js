@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 import { BsStarFill } from 'react-icons/bs';
+import ReactTimeAgo from 'react-time-ago';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
+import ru from 'javascript-time-ago/locale/ru';
+
+TimeAgo.addDefaultLocale(en);
+TimeAgo.addLocale(ru);
 
 class Review extends Component {
     constructor(props) {
@@ -66,13 +73,16 @@ class Review extends Component {
                     </div>
                     <div className="foot">
                         <div className="user">by {rev.reviewUserName} </div>
+                        <div className="time"><ReactTimeAgo date={rev.reviewDate} locale="en-US" timeStyle="round"/></div>
                         <div className="version">{rev.version}</div>
-                        <div className="time"></div>
-                        <div className="country">
-                            <img  alt={rev.countryName}></img> <p>{rev.countryName}</p>
+                        <div className="country_flag">
+                            <img className="flag" src={"/flags/png/" + rev.countryName + ".png"} alt={rev.countryName}></img> 
+                        </div>
+                        <div className="country_name">
+                            <p> {rev.countryName}</p>
                         </div>
                         <button className="reply">reply</button>
-                        <button className="share" type="">share <FiChevronDown size={17} /></button>
+                        <button className="share" type="">share <FiChevronDown className="arrow" size={17} /></button>
                     </div>
                 </div>
             );
