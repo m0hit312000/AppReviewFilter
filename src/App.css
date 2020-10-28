@@ -1,8 +1,71 @@
 * {
   margin: 0;
-  padding: 0;
+  padding: 0px;
   box-sizing: border-box;
 }
+/* ************************************************ Filter *************************************************** */
+
+.filters {
+  display: grid;
+  grid-template-columns: 70% 15% 15%;
+  grid-template-rows: 100%;
+  height: 200px;
+  align-items: center;
+  margin: 10px;
+  padding: 20px;
+  border-bottom: 2px silver solid;
+  
+}
+
+.app_selection {
+  display: flex;
+  flex-direction: column;
+}
+
+.products_head {
+  margin-bottom: 10px;
+}
+
+.select_products {
+  height: 40px;
+  width: 500px;
+  padding: 5px;
+  font-size: 17px;
+}
+
+.sorting {
+  display: flex;
+  flex-direction: column;
+}
+
+.sorting_head {
+  margin-bottom: 10px;
+}
+
+.select_sort {
+  height: 40px;
+  width: 150px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.translation {
+  display: flex;
+  flex-direction: column;
+}
+
+.translation_head {
+  margin-bottom: 10px;
+}
+
+.select_language {
+  height: 40px;
+  width: 100px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+/* *********************************************** Review Card ************************************************ */
 
 .rev_card {
   display: grid;

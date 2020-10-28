@@ -16,7 +16,7 @@ class Main extends Component {
     return(
       <div>
         <Filter />
-        {/* <Review reviews = {this.state.review}/> */}
+        <Review reviews = {this.state.review}/>
       </div>  
     );
   }
