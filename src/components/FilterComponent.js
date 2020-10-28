@@ -1,26 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Filter extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-           selectproducts: '',
-           sorting: 'Newest First',
-           translation: 'English'   
-        }
-    }
-
-    render() {
+function Filter({sorts, sorting}) {
         return(
           <div className="filters">
             <div className="app_selection">
                <span className="products_head">select products</span>  
-               <select className="select_products">
-                   <option selected value="myntra">Amazon</option>
-                   <option value="flipkart">Flipkart</option>
-                   <option value="amazon">Google</option>
-                   <option value="google">Myntra</option>
+               <select value={sorts} onChange={sorting} className="select_products">
+                   <option value="com.amazon">Amazon</option>
+                   <option value="com.flipkart">Flipkart</option>
+                   <option value="com.google">Google</option>
+                   <option value="com.myntra">Myntra</option>
                </select>     
             </div>
             <div className="sorting">
@@ -39,7 +28,6 @@ class Filter extends Component {
             </div>  
           </div>  
         );
-    }
 }
 
 export default Filter;
