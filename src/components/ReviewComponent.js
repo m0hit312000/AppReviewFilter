@@ -11,14 +11,14 @@ TimeAgo.addLocale(ru);
 
 function RenderReviewItem({rev}) {
     return(
-        <div key={rev.id} className="rev_card">
+        <div className="rev_card">
                 <div className="head">
                     <div className="logo"></div>
                     <div className="app_store">{rev.appStoreName}</div>
                     <div className="review_head">{rev.reviewHeading}</div>
                     <div className="rating">
                         {[...Array(parseInt(rev.rating))].map((star) => {
-                            return  <label classname="stars"> <BsStarFill size={17} color="rgb(255, 196, 0)"/> </label>
+                            return  <label className="stars"> <BsStarFill size={17} color="rgb(255, 196, 0)"/> </label>
                         })}
                 </div>
             </div>
@@ -42,13 +42,12 @@ function RenderReviewItem({rev}) {
     );
 }      
 
-    const Review = (props) => {
-
-        const review = props.reviews.map((rev) => {
-        return(
-            <RenderReviewItem rev={rev}/>
-        );
-    })
+const Review = (props) => {
+    const review = props.reviews.map((rev) => {
+    return(
+        <RenderReviewItem rev={rev}  key = {rev.id}/>
+    );
+})
 
     return (
         <div>

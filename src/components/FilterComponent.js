@@ -6,6 +6,7 @@ function Filter({sorts, sorting}) {
             <div className="app_selection">
                <span className="products_head">select products</span>  
                <select value={sorts} onChange={sorting} className="select_products">
+                   <option value="all">All</option>
                    <option value="com.amazon">Amazon</option>
                    <option value="com.flipkart">Flipkart</option>
                    <option value="com.google">Google</option>
