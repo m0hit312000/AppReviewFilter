@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Review from './ReviewComponent';
 import Filter from './FilterComponent';
 import { Reviews } from '../shared/review';
+import SideFilter from './SideFilterComponent';
 
 class Main extends Component {
 
@@ -36,11 +37,12 @@ class Main extends Component {
 
   render() {
     return(
-      <div>
+      <div className="filter_app">
         <Filter 
           sorting={this.sorting}
           sorts={this.state.sorts}
         />
+        <SideFilter />
         <Review reviews = {this.state.review} /> 
       </div>  
     );

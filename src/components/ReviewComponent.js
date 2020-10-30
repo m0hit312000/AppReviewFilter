@@ -53,7 +53,7 @@ const Review = (props) => {
 })
 
     return (
-        <div>
+        <div className="reviews">
             {review} 
         </div>
     );
