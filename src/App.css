@@ -89,6 +89,41 @@
   padding: 20px;
 }
 
+.input_filed i {
+  position: absolute;
+}
+
+.input_filed {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.search_icon {
+  padding: 5px; 
+  height: 40px;
+  width: 50px; 
+  text-align: left; 
+  color: grey;
+}
+
+.search_filter {
+  height: 40px;
+  width: 100%;
+  padding: 5px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.time_filter {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.time_select {
+  height: 40px;
+  width: 100%;
+}
+
 /* *********************************************** Review Card ************************************************ */
 
 .reviews {
