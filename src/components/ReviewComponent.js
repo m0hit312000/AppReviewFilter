@@ -4,22 +4,25 @@ import { BsStarFill } from 'react-icons/bs';
 import ReactTimeAgo from 'react-time-ago';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-import ru from 'javascript-time-ago/locale/ru';
 
 TimeAgo.addDefaultLocale(en);
-TimeAgo.addLocale(ru);
+
+function TimeConverter(time) {
+    let date = new Date(Date.parse(time));
+    return date.getTime();
+}
 
 function RenderReviewItem({rev}) {
     return(
         <div className="rev_card">
-                <div className="head">
-                    <div className="logo"></div>
-                    <div className="app_store">{rev.appStoreName}</div>
-                    <div className="review_head">{rev.reviewHeading}</div>
-                    <div className="rating">
-                        {[...Array(parseInt(rev.rating))].map((star) => {
-                            return  <label className="stars"> <BsStarFill size={17} color="rgb(255, 196, 0)"/> </label>
-                        })}
+            <div className="head">
+                <div className="logo"></div>
+                <div className="app_store">{rev.appStoreName}</div>
+                <div className="review_head">{rev.reviewHeading}</div>
+                <div className="rating">
+                    {[...Array(parseInt(rev.rating))].map((star) => {
+                        return  <label className="stars"> <BsStarFill size={17} color="rgb(255, 196, 0)"/> </label>
+                    })}
                 </div>
             </div>
             <div className="review_text">
@@ -27,7 +30,7 @@ function RenderReviewItem({rev}) {
             </div>
             <div className="foot">
                 <div className="user">by {rev.reviewUserName} </div>
-                <div className="time"><ReactTimeAgo date={rev.reviewDate} locale="en-US" timeStyle="round"/></div>
+                <div className="time"><ReactTimeAgo date = {TimeConverter(rev.reviewDate)}  locale="en-US" timeStyle="round"/></div>
                 <div className="version">{rev.version}</div>
                 <div className="country_flag">
                     <img className="flag" src={"/flags/png/" + rev.countryName + ".png"} alt={rev.countryName}></img> 
@@ -45,7 +48,7 @@ function RenderReviewItem({rev}) {
 const Review = (props) => {
     const review = props.reviews.map((rev) => {
     return(
-        <RenderReviewItem rev={rev}  key = {rev.id}/>
+        <RenderReviewItem rev={rev} key={rev.id}/>
     );
 })
 

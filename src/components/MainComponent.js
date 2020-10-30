@@ -32,6 +32,8 @@ class Main extends Component {
     })
   };
 
+  
+
   render() {
     return(
       <div>
@@ -39,7 +41,7 @@ class Main extends Component {
           sorting={this.sorting}
           sorts={this.state.sorts}
         />
-        <Review reviews = {this.state.review}/> 
+        <Review reviews = {this.state.review} /> 
       </div>  
     );
   }

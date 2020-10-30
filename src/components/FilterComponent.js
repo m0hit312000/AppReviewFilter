@@ -15,7 +15,7 @@ function Filter({sorts, sorting}) {
             </div>
             <div className="sorting">
                <span className="sorting_head">sorting</span>  
-               <select className="select_sort">
+               <select  className="select_sort">
                    <option value="newestfirst">Newest First</option>
                    <option value="oldestfirst">Oldest First</option>
                </select>     
