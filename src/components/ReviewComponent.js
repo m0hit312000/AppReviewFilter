@@ -1,10 +1,14 @@
 import React from 'react';
 import { FiChevronDown } from 'react-icons/fi';
-import { BsStarFill } from 'react-icons/bs';
+import { BsStarFill, BsBellFill } from 'react-icons/bs';
 import ReactTimeAgo from 'react-time-ago';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
-
+import { AiFillCaretDown } from 'react-icons/ai';
+import { IoIosWifi } from 'react-icons/io';
+import { BiCodeCurly } from 'react-icons/bi';
+import { FaDownload } from 'react-icons/fa';
+ 
 TimeAgo.addDefaultLocale(en);
 
 function TimeConverter(time) {
@@ -54,6 +58,13 @@ const Review = (props) => {
 
     return (
         <div className="reviews">
+            <div className="review_head">
+                <span>Viewing 1-10 0f 157 Reviews</span>
+                <button><BsBellFill className="bell" size={17} style={{marginLeft: "5px", marginRight: "5px"}}/> Create Alert <AiFillCaretDown className="down" size={17} style={{marginLeft: "15px", marginRight: "5px"}}/></button> 
+                <div className="others">
+                    <IoIosWifi className="wifi" size={17} style={{marginLeft: "10px", marginRight: "5px"}}/> <BiCodeCurly className="curly" size={17} style={{marginLeft: "5px", marginRight: "10px"}}/> <FaDownload className="download" size={17} style={{marginLeft: "5px", marginRight: "5px"}}/>
+                </div>
+            </div>
             {review} 
         </div>
     );

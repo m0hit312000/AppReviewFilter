@@ -7,10 +7,10 @@
 .filter_app {
   display: grid;
   grid-template-columns: 20% 80%;
-  grid-template-rows: 21% 79%;
-  height: 100vh;
+  grid-template-rows: 15% 85%;
+  height: 140vh;
   width: 100%;
-  padding: 50px;
+  padding: 30px;
 }
 
 /* ************************************************ Filter *************************************************** */
@@ -89,11 +89,7 @@
   padding: 20px;
 }
 
-.input_filed i {
-  position: absolute;
-}
-
-.input_filed {
+.input_field {
   width: 100%;
   margin-bottom: 10px;
 }
@@ -103,7 +99,7 @@
   height: 40px;
   width: 50px; 
   text-align: left; 
-  color: grey;
+  color: black;
 }
 
 .search_filter {
@@ -112,16 +108,109 @@
   padding: 5px;
   font-size: 20px;
   text-align: center;
+  color: black;
+  border-color: silver;
+  border-radius: 5px;
+  background-color: white;
+  outline: none;
 }
 
 .time_filter {
   width: 100%;
   margin-top: 20px;
+  position: relative;
 }
 
 .time_select {
   height: 40px;
   width: 100%;
+  text-align: center;
+  font-size: 20px;
+  padding-left: 80px;
+  border-radius: 5px;
+  background-color: white;
+  outline: none;
+}
+
+.date_icon {
+  padding: 5px; 
+  height: 40px;
+  width: 50px; 
+  text-align: right; 
+  color: black;
+}
+
+.time_select option {
+  margin-left: 20px;
+}
+
+.rating_filter {
+  margin-top: 20px;
+}
+
+.right {
+  transform: translate(0, 3px);
+}
+
+.rating_head {
+  font-size: 14px;
+}
+
+.rating_list {
+  margin-top: 15px;
+  text-decoration: none;
+  list-style: none;
+}
+
+.rating_list li {
+  margin-bottom: 10px;
+  margin-left: 15px;
+}
+
+.version_filter {
+  margin-top: 20px;
+}
+
+.version_head {
+  font-size: 14px; 
+}
+
+.version_list {
+  margin-top: 15px;
+  text-decoration: none;
+  list-style: none;
+}
+
+.version_list li {
+  margin-bottom: 10px;
+  font-size: 15px;
+  margin-left: 15px;
+}
+
+.country_filter {
+  margin-top: 20px;
+}
+
+.country_head {
+  font-size: 14px; 
+}
+
+.country_list {
+  margin-top: 15px;
+  text-decoration: none;
+  list-style: none;
+}
+
+.country_list li {
+  display: flex;
+  margin-bottom: 10px;
+  font-size: 15px;
+  margin-left: 15px;
+  align-items: center;
+}
+
+.flag_name {
+  margin-left: 5px;
 }
 
 /* *********************************************** Review Card ************************************************ */
@@ -134,6 +223,39 @@
   padding: 20px;
   overflow-x: hidden;
 }
+
+.review_head {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.review_head span {
+  font-size: 15px;
+}
+
+.review_head button {
+  height: 30px;
+  background-color: white;
+  border: 1px solid silver;
+  border-radius: 5px;
+  font-size: 15px;
+}
+
+.down, .bell, .curly, .download {
+  transform: translate(0, 3px);
+}
+
+.wifi {  
+  transform: rotateZ(50deg) translate(0, 7px);
+}
+
+.others {
+  border: 1px solid silver;
+  width: 100px;
+  height: 30px;
+} 
 
 .rev_card {
   display: grid;
