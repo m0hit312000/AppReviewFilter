@@ -22,7 +22,7 @@ function RenderReviewItem({rev}) {
             <div className="head">
                 <div className="logo"></div>
                 <div className="app_store">{rev.appStoreName}</div>
-                <div className="review_head">{rev.reviewHeading}</div>
+                <div className="review_heading">{rev.reviewHeading}</div>
                 <div className="rating">
                     {[...Array(parseInt(rev.rating))].map((star) => {
                         return  <label className="stars"> <BsStarFill size={17} color="rgb(255, 196, 0)"/> </label>
@@ -60,9 +60,9 @@ const Review = (props) => {
         <div className="reviews">
             <div className="review_head">
                 <span>Viewing 1-10 0f 157 Reviews</span>
-                <button><BsBellFill className="bell" size={17} style={{marginLeft: "5px", marginRight: "5px"}}/> Create Alert <AiFillCaretDown className="down" size={17} style={{marginLeft: "15px", marginRight: "5px"}}/></button> 
+                <button className="alert"><BsBellFill className="bell" size={17} /> Create Alert <AiFillCaretDown className="down" size={17} /></button> 
                 <div className="others">
-                    <IoIosWifi className="wifi" size={17} style={{marginLeft: "10px", marginRight: "5px"}}/> <BiCodeCurly className="curly" size={17} style={{marginLeft: "5px", marginRight: "10px"}}/> <FaDownload className="download" size={17} style={{marginLeft: "5px", marginRight: "5px"}}/>
+                    <IoIosWifi className="wifi" size={17} /> <BiCodeCurly className="curly" size={17} /> <FaDownload className="download" size={17} />
                 </div>
             </div>
             {review} 

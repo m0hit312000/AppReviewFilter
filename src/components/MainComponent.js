@@ -23,7 +23,7 @@ class Main extends Component {
       if(sorting === rev.appID) {
         return rev;
       }
-      if(sorting === 'all') {
+      else if(sorting === 'all') {
         return rev
       }
     });
