@@ -4,16 +4,24 @@ import Filter from './FilterComponent';
 import { Reviews } from '../shared/review';
 import SideFilter from './SideFilterComponent';
 
+
 class Main extends Component {
 
   constructor(props) {
       super(props);
       this.state = {
           review: Reviews,
+          total: Reviews.length,
+          perPage: 10,
+          pagination: {
+             start: 0,
+             end: 10
+          },
           sorts: ''
       }
 
       this.sorting = this.sorting.bind(this);
+      this.onPageChange = this.onPageChange.bind(this);
   }  
 
   sorting(e){
@@ -29,11 +37,19 @@ class Main extends Component {
     });
     this.setState({
       sorts: sorting,
-      review: sortRes
+      total: sortRes.length,
+      review: sortRes,
     })
   };
 
-  
+  onPageChange(start, end) {
+     this.setState({
+       pagination: {
+         start: start,
+         end: end
+       }
+     })  
+  }
 
   render() {
     return(
@@ -43,7 +59,7 @@ class Main extends Component {
           sorts={this.state.sorts}
         />
         <SideFilter />
-        <Review reviews = {this.state.review} /> 
+        <Review reviews = {this.state.review} total = {this.state.total} perPage= {this.state.perPage} page = {this.state.pagination} change = {this.onPageChange}/> 
       </div>  
     );
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 import { BsStarFill, BsBellFill } from 'react-icons/bs';
 import ReactTimeAgo from 'react-time-ago';
@@ -49,23 +49,54 @@ function RenderReviewItem({rev}) {
     );
 }      
 
+
 const Review = (props) => {
-    const review = props.reviews.map((rev) => {
-    return(
-        <RenderReviewItem rev={rev} key={rev.id}/>
-    );
-})
+
+    const [counter, setCounter] = useState(1);
+    const review = props.reviews.slice(props.page.start, props.page.end).map((rev) => {
+        return(
+            <RenderReviewItem rev={rev} key={rev.id}/>
+        );
+    })
+
+    useEffect(() => {
+       const value = props.perPage * counter;
+       props.change(value - props.perPage, value); 
+    }, [counter]);
+
+    const onButtonClick = (type) => {
+        if(type === 'prev') {
+           if(counter === 1) {
+               setCounter(1);
+           }
+           else {
+               setCounter(counter - 1);
+           }
+        }
+        else if(type === 'next') {
+           if(Math.ceil(props.total/props.perPage) === counter) {
+               setCounter(counter);
+           }
+           else {
+               setCounter(counter + 1);
+           }
+        }
+    }
 
     return (
         <div className="reviews">
             <div className="review_head">
-                <span>Viewing 1-10 0f 157 Reviews</span>
+                <span>Viewing {props.page.start+1}-{props.page.end} 0f {props.total} Reviews</span>
                 <button className="alert"><BsBellFill className="bell" size={17} /> Create Alert <AiFillCaretDown className="down" size={17} /></button> 
                 <div className="others">
                     <IoIosWifi className="wifi" size={17} /> <BiCodeCurly className="curly" size={17} /> <FaDownload className="download" size={17} />
                 </div>
             </div>
             {review} 
+            <div className="pagination">
+                <button className="prev" onClick={() => onButtonClick('prev')}>Prev</button>
+                <button className="next" onClick={() => onButtonClick('next')}>Next</button>
+            </div>
         </div>
     );
 }
