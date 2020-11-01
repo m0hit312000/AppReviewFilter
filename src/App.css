@@ -224,6 +224,10 @@
   overflow-x: hidden;
 }
 
+.reviews::-webkit-scrollbar {
+  display: none;
+}
+
 .review_head {
   display: grid;
   grid-template-columns: .7fr .2fr .1fr;
@@ -372,4 +376,34 @@
 .arrow {
   transform: translate(0,4px);
   align-items: baseline;
+}
+
+.pagination {
+  display: flex;
+  width: 100%;
+  margin-top: 50px;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-item {
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+  font-size: 15px;
+  padding: 5px;
+  border: 1px solid silver;
+  outline: none;
+  border-radius: 5px;
+}
+
+.prev, .next {
+  height: 30px;
+  width: 50px;
+}
+
+.active {
+  background-color: rgb(31, 31, 202);
+  color: white;
 }

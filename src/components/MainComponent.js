@@ -17,6 +17,10 @@ class Main extends Component {
              start: 0,
              end: 10
           },
+          index: {
+            start: 1,
+            end: Math.ceil(Reviews.length/10)
+          },
           sorts: ''
       }
 
@@ -39,6 +43,14 @@ class Main extends Component {
       sorts: sorting,
       total: sortRes.length,
       review: sortRes,
+      pagination: {
+        start: 0,
+        end: 10
+      },
+      index: {
+        start: 1,
+        end: Math.ceil(Reviews.length/10)
+      },
     })
   };
 
@@ -59,7 +71,14 @@ class Main extends Component {
           sorts={this.state.sorts}
         />
         <SideFilter />
-        <Review reviews = {this.state.review} total = {this.state.total} perPage= {this.state.perPage} page = {this.state.pagination} change = {this.onPageChange}/> 
+        <Review 
+          reviews = {this.state.review} 
+          total = {this.state.total} 
+          perPage= {this.state.perPage} 
+          page = {this.state.pagination} 
+          change = {this.onPageChange}
+          index = {this.state.index}
+        /> 
       </div>  
     );
   }
