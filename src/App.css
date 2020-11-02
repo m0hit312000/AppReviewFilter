@@ -170,6 +170,7 @@
   grid-template-rows: 1fr;
   margin-bottom: 10px;
   margin-left: 15px;
+  cursor: pointer;
 }
 
 .stars {
@@ -213,6 +214,7 @@
   margin-bottom: 10px;
   font-size: 15px;
   margin-left: 15px;
+  cursor: pointer;
 }
 
 .ver_no {
@@ -253,6 +255,7 @@
   font-size: 15px;
   margin-left: 15px;
   align-items: center;
+  cursor: pointer;
 }
 
 .flag {

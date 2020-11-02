@@ -21,7 +21,7 @@ class Main extends Component {
             start: 0,
             end: 10
           },
-          sorts: ''
+          sorts: 'all'
       }
 
       this.sorting = this.sorting.bind(this);
@@ -29,6 +29,8 @@ class Main extends Component {
       this.onIndexChange = this.onIndexChange.bind(this);
       this.searchSorting = this.searchSorting.bind(this);
       this.ratingSorting = this.ratingSorting.bind(this);
+      this.versionSorting = this.versionSorting.bind(this);
+      this.countrySorting = this.countrySorting.bind(this);
       this.ratingCount = this.ratingCount.bind(this);
       this.versionCount = this.versionCount.bind(this);
       this.countryCount = this.countryCount.bind(this);
@@ -64,7 +66,6 @@ class Main extends Component {
     const rev = Reviews;
     const constant = 'com.';
     const sorting = constant + e.target.value;
-    console.log(sorting);
     const sortRes = rev.filter((rev) => {
       if(sorting === rev.appID) {
         return rev;
@@ -136,10 +137,15 @@ class Main extends Component {
     return count; 
   }
 
-  ratingSorting(val){
-    var sortRes = this.state.review.filter((rev) => {
-      if(rev.rating === val) {
+  ratingSorting(val, sort){
+    const app = sort;
+    const sorting = app;
+    const sortRes = Reviews.filter((rev) => {
+      if(sorting === rev.appID && rev.rating === val) {
         return rev;
+      }
+      else if(sorting === 'all' && rev.rating === val) {
+        return rev
       }
     });
     this.setState({
@@ -154,6 +160,58 @@ class Main extends Component {
        end: 10
      },
     })
+ };
+
+ versionSorting(val, sort) {
+    const app = sort;
+    const sorting = app;
+    console.log(sorting);
+    const sortRes = Reviews.filter((rev) => {
+      if(sorting === rev.appID && rev.version === val) {
+        return rev;
+      }
+      else if(sorting === 'all' && rev.version === val) {
+        return rev
+      }
+    });
+    this.setState({
+    total: sortRes.length,
+    review: sortRes,
+    pagination: {
+      start: 0,
+      end: 10
+    },
+    index: {
+      start: 0,
+      end: 10
+    },
+   })
+ }
+
+ countrySorting(val, sort) {
+    const app = sort;
+    const sorting = app;
+    console.log(sorting);
+    const sortRes = Reviews.filter((rev) => {
+      if(sorting === rev.appID && rev.countryName === val) {
+        return rev;
+      }
+      else if(sorting === 'all' && rev.countryName === val) {
+        return rev
+      }
+    });
+    this.setState({
+    total: sortRes.length,
+    review: sortRes,
+    pagination: {
+      start: 0,
+      end: 10
+    },
+    index: {
+      start: 0,
+      end: 10
+    },
+  })
  }
 
   render() {
@@ -164,8 +222,12 @@ class Main extends Component {
           sorts={this.state.sorts}
         />
         <SideFilter 
+          sorts = {this.state.sorts}
+          sortingD = {this.sorting}
           sorting={this.searchSorting}
           ratingSorting={this.ratingSorting}
+          versionSorting={this.versionSorting}
+          countrySorting={this.countrySorting}
           ratingCount={this.ratingCount}
           versionCount={this.versionCount}
           countryCount={this.countryCount}
