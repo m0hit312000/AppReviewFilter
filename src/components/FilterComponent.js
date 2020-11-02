@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Filter({sorts, sorting}) {
+function Filter({sorts, sorting, factor, timeSorting}) {
         return(
           <div className="filters">
             <div className="app_selection">
@@ -15,7 +15,7 @@ function Filter({sorts, sorting}) {
             </div>
             <div className="sorting">
                <span className="sorting_head">sorting</span>  
-               <select  className="select_sort">
+               <select value={factor} onChange={timeSorting} className="select_sort">
                    <option value="newestfirst">Newest First</option>
                    <option value="oldestfirst">Oldest First</option>
                </select>     

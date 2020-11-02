@@ -12,12 +12,9 @@ import Pagination from './PaginationComponent';
  
 TimeAgo.addDefaultLocale(en);
 
-function TimeConverter(time) {
-    let date = new Date(Date.parse(time));
-    return date.getTime();
-}
 
-function RenderReviewItem({rev}) {
+
+function RenderReviewItem({rev, time, TimeConverter}) {
     return(
         <div className="rev_card">
             <div className="head">
@@ -35,7 +32,7 @@ function RenderReviewItem({rev}) {
             </div>
             <div className="foot">
                 <div className="user">by {rev.reviewUserName} </div>
-                <div className="time"><ReactTimeAgo date = {TimeConverter(rev.reviewDate)}  locale="en-US" timeStyle="round"/></div>
+                <div className="time"><ReactTimeAgo date = {TimeConverter(time)}  timeStyle="round"/></div>
                 <div className="version">{rev.version}</div>
                 <div className="country_flag">
                     <img className="flag" src={"/flags/png/" + rev.countryName + ".png"} alt={rev.countryName}></img> 
@@ -51,13 +48,13 @@ function RenderReviewItem({rev}) {
 }      
 
 
-const Review = ({reviews, total, perPage, page, change, index, onIndexChange}) => {
+const Review = ({reviews, total, perPage, page, change, index, onIndexChange, TimeConverter}) => {
 
     const [counter, setCounter] = useState(1);
     const [noOfButtons, setnoOfButtons] = useState(Math.ceil(total/perPage));
     const review = reviews.slice(page.start, page.end).map((rev) => {
         return(
-            <RenderReviewItem rev={rev} key={rev.id} />
+            <RenderReviewItem rev={rev} key={rev.id} time={rev.reviewDate} TimeConverter={TimeConverter}/>
         );
     });
 
@@ -82,12 +79,10 @@ const Review = ({reviews, total, perPage, page, change, index, onIndexChange}) =
                setCounter(1);
                if(index.start < 0)
                  onIndexChange(0, 10);
-            //    console.log(noOfButtons, counter, index.start, index.end);
            }
            else {
                 setCounter(counter - 10);
                 onIndexChange(index.start-10, index.end-10);
-                // console.log(noOfButtons, counter, index.start, index.end);
            }
         }
         else if(type === 'next') {
@@ -95,12 +90,10 @@ const Review = ({reviews, total, perPage, page, change, index, onIndexChange}) =
                setCounter(counter);
                if(index.end > Math.ceil(total/perPage))
                 onIndexChange(index.start, index.end);
-            //    console.log(noOfButtons, counter, index.start, index.end);
            }
            else {
                 setCounter(counter + 10);
                 onIndexChange(index.start+10, index.end+10);
-                // console.log(noOfButtons, counter, index.start, index.end);
            }
         }
     }

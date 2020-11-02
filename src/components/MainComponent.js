@@ -21,10 +21,12 @@ class Main extends Component {
             start: 0,
             end: 10
           },
-          sorts: 'all'
+          sorts: 'all',
+          factor: 'newestfirst'
       }
 
       this.sorting = this.sorting.bind(this);
+      this.timeSorting = this.timeSorting.bind(this);
       this.onPageChange = this.onPageChange.bind(this);
       this.onIndexChange = this.onIndexChange.bind(this);
       this.searchSorting = this.searchSorting.bind(this);
@@ -34,7 +36,10 @@ class Main extends Component {
       this.ratingCount = this.ratingCount.bind(this);
       this.versionCount = this.versionCount.bind(this);
       this.countryCount = this.countryCount.bind(this);
+      this.TimeConverter = this.TimeConverter.bind(this);
   }  
+
+  // componentDidMount(){}
 
   sorting(e){
     const rev = Reviews;
@@ -61,6 +66,37 @@ class Main extends Component {
       },
     })
   };
+
+  TimeConverter(time) {
+    let date = new Date(Date.parse(time));
+    return date.getTime();
+  }
+
+  timeSorting(e) {
+    const rev = this.state.review;
+    const factor = e.target.value;
+    console.log(factor);
+    const sortRes = rev.sort((a, b) => {
+       if(factor === 'newestfirst') {
+          return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
+       }
+       else if(factor === 'oldestfirst') {
+          return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
+       }
+    });
+    this.setState({
+      factor: factor,
+      review: sortRes,
+      pagination: {
+        start: 0,
+        end: 10
+      },
+      index: {
+        start: 0,
+        end: 10
+      },
+    });    
+  }
 
   searchSorting(e) {
     const rev = Reviews;
@@ -220,6 +256,8 @@ class Main extends Component {
         <Filter 
           sorting={this.sorting}
           sorts={this.state.sorts}
+          factor={this.state.factor}
+          timeSorting={this.timeSorting}
         />
         <SideFilter 
           sorts = {this.state.sorts}
@@ -241,6 +279,7 @@ class Main extends Component {
           change = {this.onPageChange}
           index = {this.state.index}
           onIndexChange = {this.onIndexChange}
+          TimeConverter = {this.TimeConverter}
         /> 
       </div>  
     );
