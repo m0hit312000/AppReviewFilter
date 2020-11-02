@@ -8,6 +8,7 @@ import { AiFillCaretDown } from 'react-icons/ai';
 import { IoIosWifi } from 'react-icons/io';
 import { BiCodeCurly } from 'react-icons/bi';
 import { FaDownload } from 'react-icons/fa';
+import Pagination from './PaginationComponent';
  
 TimeAgo.addDefaultLocale(en);
 
@@ -15,6 +16,15 @@ function TimeConverter(time) {
     let date = new Date(Date.parse(time));
     return date.getTime();
 }
+
+// function pagination({rev, page, rows}) {
+//     var trimStart = (page-1) * rows;
+//     var trimEnd = trimStart + rows;
+
+//     var trimmeddata = rev.slice(trimStart, trimEnd)
+
+//     var pages = rev
+// }
 
 function RenderReviewItem({rev}) {
     return(
@@ -50,41 +60,56 @@ function RenderReviewItem({rev}) {
 }      
 
 
-const Review = (props) => {
+const Review = ({reviews, total, perPage, page, change, index, onIndexChange}) => {
 
     const [counter, setCounter] = useState(1);
-    const [noOfButtons, setnoOfButtons] = useState(Math.ceil(props.total/props.perPage));
-    const [start, setStart] = useState(0)
-    const review = props.reviews.slice(props.page.start, props.page.end).map((rev) => {
+    const [noOfButtons, setnoOfButtons] = useState(Math.ceil(total/perPage));
+    const review = reviews.slice(page.start, page.end).map((rev) => {
         return(
-            <RenderReviewItem rev={rev} key={rev.id}/>
+            <RenderReviewItem rev={rev} key={rev.id} />
         );
-    })
+    });
+
+    const buttons = new Array(noOfButtons).fill("").map((el, index) => ( 
+            <button key={index} className={`page-item ${index + 1 === counter?"active":null}`}
+            onClick={() => setCounter(index+1)}>{ index + 1}
+            </button>
+    )); 
 
     useEffect(() => {
-       const value = props.perPage * counter;
-       props.change(value - props.perPage, value); 
+       const value = perPage * counter;
+       change(value - perPage, value); 
     }, [counter]);
+
+    useEffect(() => {
+       setnoOfButtons(Math.ceil(total/perPage));
+    }, [total])
 
     const onButtonClick = (type) => {
         if(type === 'prev') {
-           if(counter === 1 || props.page.start === 0) {
+           if(counter < 10) {
                setCounter(1);
+               if(index.start < 0)
+                 onIndexChange(0, 10);
+            //    console.log(noOfButtons, counter, index.start, index.end);
            }
            else {
-               if(counter > 10)
                 setCounter(counter - 10);
-               setStart(start+10)
+                onIndexChange(index.start-10, index.end-10);
+                // console.log(noOfButtons, counter, index.start, index.end);
            }
         }
         else if(type === 'next') {
-           if(noOfButtons === counter) {
+           if(noOfButtons-10 <= counter) {
                setCounter(counter);
+               if(index.end > Math.ceil(total/perPage))
+                onIndexChange(index.start, index.end);
+            //    console.log(noOfButtons, counter, index.start, index.end);
            }
            else {
-               if(counter < noOfButtons-10)
                 setCounter(counter + 10);
-               setStart(start-10)
+                onIndexChange(index.start+10, index.end+10);
+                // console.log(noOfButtons, counter, index.start, index.end);
            }
         }
     }
@@ -92,48 +117,16 @@ const Review = (props) => {
     return (
         <div className="reviews">
             <div className="review_head">
-                <span>Viewing {props.page.start+1}-{props.page.end} of {props.total} Reviews</span>
+                <span>Viewing {page.start+1}-{page.end} of {total} Reviews</span>
                 <button className="alert"><BsBellFill className="bell" size={17} /> Create Alert <AiFillCaretDown className="down" size={17} /></button> 
                 <div className="others">
                     <IoIosWifi className="wifi" size={17} /> <BiCodeCurly className="curly" size={17} /> <FaDownload className="download" size={17} />
                 </div>
             </div>
             {review} 
-            <div className="pagination">
-                <button className="prev page-item" onClick={() => onButtonClick('prev')}>Prev</button>
-                {new Array(noOfButtons).slice(start, start+10).fill("").map((el, index) => ( 
-                    <button key={index} className={`page-item ${start + index + 1 === start + counter?"active":null}`}
-                       onClick={() => setCounter(start+index+1)}>{start + index + 1}</button>
-                ))}
-                <button className="next page-item" onClick={() => onButtonClick('next')}>Next</button>
-            </div>
+            <Pagination review = {reviews} noOfButtons = {buttons} onButtonClick = {onButtonClick} start = {index.start} end = {index.end} counter = {counter} setCounter = {setCounter} onIndexChange = {onIndexChange} />
         </div>
     );
 }
 
 export default Review;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                {/* <button onClick={() => onButtonClick(counter + 0)}>{counter + 0}</button>
-                <button onClick={() => onButtonClick(counter + 1)}>{counter + 1}</button>
-                <button onClick={() => onButtonClick(counter + 2)}>{counter + 2}</button>
-                <button onClick={() => onButtonClick(counter + 3)}>{counter + 3}</button>
-                <button onClick={() => onButtonClick(counter + 4)}>{counter + 4}</button> */}

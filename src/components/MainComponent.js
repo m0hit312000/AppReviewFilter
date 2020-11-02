@@ -18,14 +18,15 @@ class Main extends Component {
              end: 10
           },
           index: {
-            start: 1,
-            end: Math.ceil(Reviews.length/10)
+            start: 0,
+            end: 10
           },
           sorts: ''
       }
 
       this.sorting = this.sorting.bind(this);
       this.onPageChange = this.onPageChange.bind(this);
+      this.onIndexChange = this.onIndexChange.bind(this);
   }  
 
   sorting(e){
@@ -48,9 +49,18 @@ class Main extends Component {
         end: 10
       },
       index: {
-        start: 1,
-        end: Math.ceil(Reviews.length/10)
+        start: 0,
+        end: 10
       },
+    })
+  };
+
+  onIndexChange(start, end) {
+    this.setState({
+      index: {
+        start: start,
+        end: end
+      }
     })
   };
 
@@ -61,7 +71,7 @@ class Main extends Component {
          end: end
        }
      })  
-  }
+  };
 
   render() {
     return(
@@ -78,6 +88,7 @@ class Main extends Component {
           page = {this.state.pagination} 
           change = {this.onPageChange}
           index = {this.state.index}
+          onIndexChange = {this.onIndexChange}
         /> 
       </div>  
     );

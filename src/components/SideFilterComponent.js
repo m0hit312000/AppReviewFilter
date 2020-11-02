@@ -2,8 +2,8 @@ import React from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import { MdDateRange } from 'react-icons/md';
 import { BsStarFill } from 'react-icons/bs';
-import { AiFillCaretRight, AiFillCaretDown } from 'react-icons/ai'
-
+import { AiFillCaretRight } from 'react-icons/ai'
+// AiFillCaretDown
 const SideFilter = () => {
    return(
       <div className="side_filter">
@@ -14,11 +14,11 @@ const SideFilter = () => {
           <div className="time_filter">
              <MdDateRange className="date_icon" style={{marginLeft: "1rem", position: "absolute"}} />
              <select className="time_select">
-                <option value="date1">all time</option> 
+                <option value="date1">all time</option>
              </select>  
           </div>
           <div className="rating_filter">
-             <span className="rating_heading"><AiFillCaretRight className="right" size={17}/> <label className="rating_head">Filter by Rating</label></span>
+             <span className="rating_heading"><AiFillCaretRight className="right" size={17}/><label className="rating_head">Filter by Rating</label></span>
              <ul className="rating_list">
                 <li><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/></li>
                 <li><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(211, 211, 211)"/></li>
