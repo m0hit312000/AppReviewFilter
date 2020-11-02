@@ -27,6 +27,11 @@ class Main extends Component {
       this.sorting = this.sorting.bind(this);
       this.onPageChange = this.onPageChange.bind(this);
       this.onIndexChange = this.onIndexChange.bind(this);
+      this.searchSorting = this.searchSorting.bind(this);
+      this.ratingSorting = this.ratingSorting.bind(this);
+      this.ratingCount = this.ratingCount.bind(this);
+      this.versionCount = this.versionCount.bind(this);
+      this.countryCount = this.countryCount.bind(this);
   }  
 
   sorting(e){
@@ -55,6 +60,34 @@ class Main extends Component {
     })
   };
 
+  searchSorting(e) {
+    const rev = Reviews;
+    const constant = 'com.';
+    const sorting = constant + e.target.value;
+    console.log(sorting);
+    const sortRes = rev.filter((rev) => {
+      if(sorting === rev.appID) {
+        return rev;
+      }
+      else if(sorting === 'com.') {
+        return rev
+      }
+    });
+    this.setState({
+      sorts: sorting,
+      total: sortRes.length,
+      review: sortRes,
+      pagination: {
+        start: 0,
+        end: 10
+      },
+      index: {
+        start: 0,
+        end: 10
+      },
+    })
+  };
+
   onIndexChange(start, end) {
     this.setState({
       index: {
@@ -65,13 +98,63 @@ class Main extends Component {
   };
 
   onPageChange(start, end) {
-     this.setState({
-       pagination: {
-         start: start,
-         end: end
-       }
-     })  
+    this.setState({
+      pagination: {
+        start: start,
+        end: end
+      }
+    })  
   };
+
+  ratingCount(star) {
+    var count = 0;
+    this.state.review.map((rev) => {
+      if(rev.rating === star){
+        count = count + 1;
+      }
+    });
+    return count; 
+  }
+
+  versionCount(ver) {
+    var count = 0;
+    this.state.review.map((rev) => {
+      if(rev.version === ver){
+        count = count + 1;
+      }
+    });
+    return count; 
+  }
+
+  countryCount(cou) {
+    var count = 0;
+    this.state.review.map((rev) => {
+      if(rev.countryName === cou){
+        count = count + 1;
+      }
+    });
+    return count; 
+  }
+
+  ratingSorting(val){
+    var sortRes = this.state.review.filter((rev) => {
+      if(rev.rating === val) {
+        return rev;
+      }
+    });
+    this.setState({
+     total: sortRes.length,
+     review: sortRes,
+     pagination: {
+       start: 0,
+       end: 10
+     },
+     index: {
+       start: 0,
+       end: 10
+     },
+    })
+ }
 
   render() {
     return(
@@ -80,7 +163,14 @@ class Main extends Component {
           sorting={this.sorting}
           sorts={this.state.sorts}
         />
-        <SideFilter />
+        <SideFilter 
+          sorting={this.searchSorting}
+          ratingSorting={this.ratingSorting}
+          ratingCount={this.ratingCount}
+          versionCount={this.versionCount}
+          countryCount={this.countryCount}
+          total = {this.state.total}
+        />
         <Review 
           reviews = {this.state.review} 
           total = {this.state.total} 

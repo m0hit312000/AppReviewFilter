@@ -17,15 +17,6 @@ function TimeConverter(time) {
     return date.getTime();
 }
 
-// function pagination({rev, page, rows}) {
-//     var trimStart = (page-1) * rows;
-//     var trimEnd = trimStart + rows;
-
-//     var trimmeddata = rev.slice(trimStart, trimEnd)
-
-//     var pages = rev
-// }
-
 function RenderReviewItem({rev}) {
     return(
         <div className="rev_card">
@@ -72,7 +63,7 @@ const Review = ({reviews, total, perPage, page, change, index, onIndexChange}) =
 
     const buttons = new Array(noOfButtons).fill("").map((el, index) => ( 
             <button key={index} className={`page-item ${index + 1 === counter?"active":null}`}
-            onClick={() => setCounter(index+1)}>{ index + 1}
+            onClick={() => setCounter(index+1)}>{ index + 1 }
             </button>
     )); 
 
