@@ -22,7 +22,8 @@ class Main extends Component {
             end: 10
           },
           sorts: 'com.amazon',
-          factor: 'newestfirst'
+          factor: 'newestfirst',
+          time: 'alltime'
       }
 
       this.sorting = this.sorting.bind(this);
@@ -37,22 +38,18 @@ class Main extends Component {
       this.versionCount = this.versionCount.bind(this);
       this.countryCount = this.countryCount.bind(this);
       this.TimeConverter = this.TimeConverter.bind(this);
+      this.timeRangeSorting = this.timeRangeSorting.bind(this);
   }  
 
   componentDidMount() {
-    const rev = Reviews.sort((a, b) => {
-      if(this.state.factor === 'newestfirst') {
-        return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
-      }
-      else if(this.state.factor === 'oldestfirst') {
-        return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
-      }
-    });
-    const sortRes = rev.filter((rev) => {
-      if(this.state.sorts === rev.appID) {
-        return rev;
-      }
-    });
+    let rev = [];
+    if(this.state.factor === 'newestfirst') {
+      rev = Reviews.sort((a, b) => this.TimeConverter(b.reviewDate) - this.TimeConverter(a.reviewDate));        
+    }
+    else if(this.state.factor === 'oldestfirst') {
+      rev = Reviews.sort((a, b) => this.TimeConverter(a.reviewDate) - this.TimeConverter(b.reviewDate));        
+    }
+    const sortRes = rev.filter(rev => this.state.sorts === rev.appID);
     this.setState({
       total: sortRes.length,
       review: sortRes,
@@ -64,24 +61,20 @@ class Main extends Component {
         start: 0,
         end: 10
       },
+      time: 'alltime'
     })
   }
 
   sorting(e){
-    const rev = Reviews.sort((a, b) => {
-      if(this.state.factor === 'newestfirst') {
-        return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
-      }
-      else if(this.state.factor === 'oldestfirst') {
-        return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
-      }
-    });
+    let rev = [];
+    if(this.state.factor === 'newestfirst') {
+      rev = Reviews.sort((a, b) => this.TimeConverter(b.reviewDate) - this.TimeConverter(a.reviewDate));        
+    }
+    else if(this.state.factor === 'oldestfirst') {
+      rev = Reviews.sort((a, b) => this.TimeConverter(a.reviewDate) - this.TimeConverter(b.reviewDate));        
+    }
     const sorting = e.target.value;
-    const sortRes = rev.filter((rev) => {
-      if(sorting === rev.appID) {
-        return rev;
-      }
-    });
+    const sortRes = rev.filter(rev => sorting === rev.appID);
     this.setState({
       sorts: sorting,
       total: sortRes.length,
@@ -94,6 +87,7 @@ class Main extends Component {
         start: 0,
         end: 10
       },
+      time: 'alltime'
     })
   };
 
@@ -105,15 +99,14 @@ class Main extends Component {
   timeSorting(e) {
     const rev = this.state.review;
     const factor = e.target.value;
-    console.log(factor);
-    const sortRes = rev.sort((a, b) => {
-       if(factor === 'newestfirst') {
-          return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
-       }
-       else if(factor === 'oldestfirst') {
-          return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
-       }
-    });
+    let sortRes = [];
+    if(factor === 'newestfirst') {
+      sortRes = rev.sort((a, b) => this.TimeConverter(b.reviewDate) - this.TimeConverter(a.reviewDate));        
+    }
+    else if(factor === 'oldestfirst') {
+      sortRes = rev.sort((a, b) => this.TimeConverter(a.reviewDate) - this.TimeConverter(b.reviewDate));        
+    }
+
     this.setState({
       factor: factor,
       review: sortRes,
@@ -131,19 +124,14 @@ class Main extends Component {
   searchSorting(e) {
     var code = e.keyCode || e.which;
     if(code === 13) { 
-      const Res = Reviews.filter((rev) => {
-        if(this.state.sorts === rev.appID) {
-          return rev;
-        }
-      });
-      const rev = Res.sort((a, b) => {
-        if(this.state.factor === 'newestfirst') {
-          return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
-        }
-        else if(this.state.factor === 'oldestfirst') {
-          return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
-        }
-      });
+      const Res = Reviews.filter(rev => this.state.sorts === rev.appID);
+      let rev = [];
+      if(this.state.factor === 'newestfirst') {
+        rev = Res.sort((a, b) => this.TimeConverter(b.reviewDate) - this.TimeConverter(a.reviewDate));        
+      }
+      else if(this.state.factor === 'oldestfirst') {
+        rev = Res.sort((a, b) => this.TimeConverter(a.reviewDate) - this.TimeConverter(b.reviewDate));        
+      }
       const sorting = e.target.value.toLowerCase();
       const sortRes = rev.filter(rev => rev.reviewHeading.toLowerCase().split(' ').includes(sorting))
       this.setState({
@@ -160,6 +148,47 @@ class Main extends Component {
       });
     }
   };
+
+  timeRangeSorting(e) {
+    const Res = Reviews.filter(rev => this.state.sorts === rev.appID);
+    let rev = [];
+    if(this.state.factor === 'newestfirst') {
+      rev = Res.sort((a, b) => this.TimeConverter(b.reviewDate) - this.TimeConverter(a.reviewDate));        
+    }
+    else if(this.state.factor === 'oldestfirst') {
+      rev = Res.sort((a, b) => this.TimeConverter(a.reviewDate) - this.TimeConverter(b.reviewDate));        
+    }
+    // console.log(rev);
+    let Res2 = [];
+    if(e.target.value === 'alltime' || e.detail === 0) {
+      Res2 = rev;
+    }
+    else if(e.target.value === 'today') {
+      Res2 = rev.filter(rev => this.TimeConverter(rev.reviewDate > Date.now()-(1000*60*60*24)))
+    }
+    else if(e.target.value === 'thisweek') {
+      Res2 = rev.filter(rev => this.TimeConverter(rev.reviewDate) > Date.now()-(1000*60*60*24*7))
+    }
+    else if(e.target.value === 'thismonth') {
+      Res2 = rev.filter(rev => this.TimeConverter(rev.reviewDate) > Date.now()-(1000*60*60*24*30))
+    }
+    else if(e.target.value === 'thisyear') {
+      Res2 = rev.filter(rev => this.TimeConverter(rev.reviewDate) > Date.now()-(1000*60*60*24*365))      
+    }
+    this.setState({
+      total: Res2.length,
+      review: Res2,
+      pagination: {
+        start: 0,
+        end: 10
+      },
+      index: {
+        start: 0,
+        end: 10
+      },
+      time: e.target.value
+    });
+  }
 
   onIndexChange(start, end) {
     this.setState({
@@ -181,7 +210,7 @@ class Main extends Component {
 
   ratingCount(star) {
     var count = 0;
-    this.state.review.map((rev) => {
+    this.state.review.forEach((rev) => {
       if(rev.rating === star){
         count = count + 1;
       }
@@ -191,7 +220,7 @@ class Main extends Component {
 
   versionCount(ver) {
     var count = 0;
-    this.state.review.map((rev) => {
+    this.state.review.forEach((rev) => {
       if(rev.version === ver){
         count = count + 1;
       }
@@ -201,7 +230,7 @@ class Main extends Component {
 
   countryCount(cou) {
     var count = 0;
-    this.state.review.map((rev) => {
+    this.state.review.forEach((rev) => {
       if(rev.countryName === cou){
         count = count + 1;
       }
@@ -212,11 +241,14 @@ class Main extends Component {
   ratingSorting(val, sort){
     const app = sort;
     const sorting = app;
-    const sortRes = Reviews.filter((rev) => {
-      if(sorting === rev.appID && rev.rating === val) {
-        return rev;
-      }
-    });
+    const Res = Reviews.filter(rev => sorting === rev.appID && rev.rating === val);
+    let sortRes = [];
+    if(this.state.factor === 'newestfirst') {
+      sortRes = Res.sort((a, b) => this.TimeConverter(b.reviewDate) - this.TimeConverter(a.reviewDate));        
+    }
+    else if(this.state.factor === 'oldestfirst') {
+      sortRes = Res.sort((a, b) => this.TimeConverter(a.reviewDate) - this.TimeConverter(b.reviewDate));        
+    }
     this.setState({
      total: sortRes.length,
      review: sortRes,
@@ -235,19 +267,14 @@ class Main extends Component {
     const app = sort;
     const sorting = app;
     console.log(sorting);
-    const Res = Reviews.filter((rev) => {
-      if(sorting === rev.appID && rev.version === val) {
-        return rev;
-      }
-    });
-    const sortRes = Res.sort((a, b) => {
-      if(this.state.factor === 'newestfirst') {
-         return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
-      }
-      else if(this.state.factor === 'oldestfirst') {
-         return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
-      }
-    });
+    const Res = Reviews.filter(rev => sorting === rev.appID && rev.version === val);
+    let sortRes = [];
+    if(this.state.factor === 'newestfirst') {
+      sortRes = Res.sort((a, b) => this.TimeConverter(b.reviewDate) - this.TimeConverter(a.reviewDate));        
+    }
+    else if(this.state.factor === 'oldestfirst') {
+      sortRes = Res.sort((a, b) => this.TimeConverter(a.reviewDate) - this.TimeConverter(b.reviewDate));        
+    }
     this.setState({
     total: sortRes.length,
     review: sortRes,
@@ -266,19 +293,14 @@ class Main extends Component {
     const app = sort;
     const sorting = app;
     console.log(sorting);
-    const Res = Reviews.filter((rev) => {
-      if(sorting === rev.appID && rev.countryName === val) {
-        return rev;
-      }
-    });
-    const sortRes = Res.sort((a, b) => {
-      if(this.state.factor === 'newestfirst') {
-         return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
-      }
-      else if(this.state.factor === 'oldestfirst') {
-         return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
-      }
-   });
+    const Res = Reviews.filter(rev => sorting === rev.appID && rev.countryName === val);
+    let sortRes = [];
+    if(this.state.factor === 'newestfirst') {
+      sortRes = Res.sort((a, b) => this.TimeConverter(b.reviewDate) - this.TimeConverter(a.reviewDate));        
+    }
+    else if(this.state.factor === 'oldestfirst') {
+      sortRes = Res.sort((a, b) => this.TimeConverter(a.reviewDate) - this.TimeConverter(b.reviewDate));        
+    }
     this.setState({
     total: sortRes.length,
     review: sortRes,
@@ -306,6 +328,8 @@ class Main extends Component {
           sorts = {this.state.sorts}
           sortingD = {this.sorting}
           sorting={this.searchSorting}
+          time={this.state.time}
+          timeRangeSorting={this.timeRangeSorting}
           ratingSorting={this.ratingSorting}
           versionSorting={this.versionSorting}
           countrySorting={this.countrySorting}

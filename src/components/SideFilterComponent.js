@@ -6,7 +6,7 @@ import { AiFillCaretRight } from 'react-icons/ai';
 import Progress from 'react-progressbar';
 
 
-const SideFilter = ({sorts, sorting, ratingCount, ratingSorting, versionSorting, countrySorting, versionCount, countryCount, total}) => {
+const SideFilter = ({sorts, sorting, ratingCount, time, timeRangeSorting, ratingSorting, versionSorting, countrySorting, versionCount, countryCount, total}) => {
    return(
       <div className="side_filter">
           <div className="input_field">
@@ -15,8 +15,12 @@ const SideFilter = ({sorts, sorting, ratingCount, ratingSorting, versionSorting,
           </div>
           <div className="time_filter">
              <MdDateRange className="date_icon" style={{marginLeft: "1rem", position: "absolute"}} />
-             <select className="time_select">
-                <option value="date1">all time</option>
+             <select value={time} className="time_select" onChange={timeRangeSorting}>
+                <option value="alltime">All time</option>
+                <option value="today">Today</option>
+                <option value="thisweek">This Week</option>
+                <option value="thismonth">This Month</option>
+                <option value="thisyear">This Year</option>
              </select>  
           </div>
           <div className="rating_filter">

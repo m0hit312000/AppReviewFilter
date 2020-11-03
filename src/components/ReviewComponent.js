@@ -63,14 +63,14 @@ const Review = ({reviews, total, perPage, page, change, index, onIndexChange, Ti
             onClick={() => setCounter(index+1)}>{ index + 1 }
             </button>
     )); 
-
+    
     useEffect(() => {
        const value = perPage * counter;
-       change(value - perPage, value); 
+       change(value - perPage, value); // eslint-disable-next-line
     }, [counter]);
 
     useEffect(() => {
-       setnoOfButtons(Math.ceil(total/perPage));
+       setnoOfButtons(Math.ceil(total/perPage));// eslint-disable-next-line
     }, [total])
 
     const onButtonClick = (type) => {
