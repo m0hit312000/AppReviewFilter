@@ -11,7 +11,7 @@ const SideFilter = ({sorts, sorting, ratingCount, ratingSorting, versionSorting,
       <div className="side_filter">
           <div className="input_field">
              <IoIosSearch style={{marginLeft: "1rem", position: "absolute"}} className="search_icon" />
-             <input className="search_filter" type="text" placeholder="Search" onChange={sorting}/>
+             <input className="search_filter" type="text" placeholder="Search" onKeyPress={sorting}/>
           </div>
           <div className="time_filter">
              <MdDateRange className="date_icon" style={{marginLeft: "1rem", position: "absolute"}} />

@@ -21,7 +21,7 @@ class Main extends Component {
             start: 0,
             end: 10
           },
-          sorts: 'all',
+          sorts: 'com.amazon',
           factor: 'newestfirst'
       }
 
@@ -39,17 +39,47 @@ class Main extends Component {
       this.TimeConverter = this.TimeConverter.bind(this);
   }  
 
-  // componentDidMount(){}
+  componentDidMount() {
+    const rev = Reviews.sort((a, b) => {
+      if(this.state.factor === 'newestfirst') {
+        return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
+      }
+      else if(this.state.factor === 'oldestfirst') {
+        return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
+      }
+    });
+    const sortRes = rev.filter((rev) => {
+      if(this.state.sorts === rev.appID) {
+        return rev;
+      }
+    });
+    this.setState({
+      total: sortRes.length,
+      review: sortRes,
+      pagination: {
+        start: 0,
+        end: 10
+      },
+      index: {
+        start: 0,
+        end: 10
+      },
+    })
+  }
 
   sorting(e){
-    const rev = Reviews;
+    const rev = Reviews.sort((a, b) => {
+      if(this.state.factor === 'newestfirst') {
+        return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
+      }
+      else if(this.state.factor === 'oldestfirst') {
+        return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
+      }
+    });
     const sorting = e.target.value;
     const sortRes = rev.filter((rev) => {
       if(sorting === rev.appID) {
         return rev;
-      }
-      else if(sorting === 'all') {
-        return rev
       }
     });
     this.setState({
@@ -99,30 +129,36 @@ class Main extends Component {
   }
 
   searchSorting(e) {
-    const rev = Reviews;
-    const constant = 'com.';
-    const sorting = constant + e.target.value;
-    const sortRes = rev.filter((rev) => {
-      if(sorting === rev.appID) {
-        return rev;
-      }
-      else if(sorting === 'com.') {
-        return rev
-      }
-    });
-    this.setState({
-      sorts: sorting,
-      total: sortRes.length,
-      review: sortRes,
-      pagination: {
-        start: 0,
-        end: 10
-      },
-      index: {
-        start: 0,
-        end: 10
-      },
-    })
+    var code = e.keyCode || e.which;
+    if(code === 13) { 
+      const Res = Reviews.filter((rev) => {
+        if(this.state.sorts === rev.appID) {
+          return rev;
+        }
+      });
+      const rev = Res.sort((a, b) => {
+        if(this.state.factor === 'newestfirst') {
+          return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
+        }
+        else if(this.state.factor === 'oldestfirst') {
+          return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
+        }
+      });
+      const sorting = e.target.value.toLowerCase();
+      const sortRes = rev.filter(rev => rev.reviewHeading.toLowerCase().split(' ').includes(sorting))
+      this.setState({
+        total: sortRes.length,
+        review: sortRes,
+        pagination: {
+          start: 0,
+          end: 10
+        },
+        index: {
+          start: 0,
+          end: 10
+        },
+      });
+    }
   };
 
   onIndexChange(start, end) {
@@ -180,9 +216,6 @@ class Main extends Component {
       if(sorting === rev.appID && rev.rating === val) {
         return rev;
       }
-      else if(sorting === 'all' && rev.rating === val) {
-        return rev
-      }
     });
     this.setState({
      total: sortRes.length,
@@ -202,12 +235,17 @@ class Main extends Component {
     const app = sort;
     const sorting = app;
     console.log(sorting);
-    const sortRes = Reviews.filter((rev) => {
+    const Res = Reviews.filter((rev) => {
       if(sorting === rev.appID && rev.version === val) {
         return rev;
       }
-      else if(sorting === 'all' && rev.version === val) {
-        return rev
+    });
+    const sortRes = Res.sort((a, b) => {
+      if(this.state.factor === 'newestfirst') {
+         return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
+      }
+      else if(this.state.factor === 'oldestfirst') {
+         return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
       }
     });
     this.setState({
@@ -228,14 +266,19 @@ class Main extends Component {
     const app = sort;
     const sorting = app;
     console.log(sorting);
-    const sortRes = Reviews.filter((rev) => {
+    const Res = Reviews.filter((rev) => {
       if(sorting === rev.appID && rev.countryName === val) {
         return rev;
       }
-      else if(sorting === 'all' && rev.countryName === val) {
-        return rev
-      }
     });
+    const sortRes = Res.sort((a, b) => {
+      if(this.state.factor === 'newestfirst') {
+         return (this.TimeConverter(b.reviewDate)) - (this.TimeConverter(a.reviewDate));
+      }
+      else if(this.state.factor === 'oldestfirst') {
+         return (this.TimeConverter(a.reviewDate)) - (this.TimeConverter(b.reviewDate));         
+      }
+   });
     this.setState({
     total: sortRes.length,
     review: sortRes,
