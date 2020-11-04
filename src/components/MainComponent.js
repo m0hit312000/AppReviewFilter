@@ -44,7 +44,6 @@ class Main extends Component {
       this.timeRangeSorting = this.timeRangeSorting.bind(this);
       this.onLoadSort = this.onLoadSort.bind(this);
       this.cancel = this.cancel.bind(this);
-      this.callFilters = this.callFilters.bind(this);
   }  
 
   componentDidMount() {
@@ -107,6 +106,9 @@ class Main extends Component {
         start: 0,
         end: 10
       },
+      rating: '',
+      version: '',
+      country: ''
     })
   };
 
@@ -137,6 +139,9 @@ class Main extends Component {
         start: 0,
         end: 10
       },
+      rating: '',
+      version: '',
+      country: ''
     });    
   }
 
@@ -158,6 +163,9 @@ class Main extends Component {
           start: 0,
           end: 10
         },
+        rating: '',
+        version: '',
+        country: ''
       });
     }
   };
@@ -198,7 +206,10 @@ class Main extends Component {
         start: 0,
         end: 10
       },
-      time: e.target.value
+      time: e.target.value,
+      rating: '',
+      version: '',
+      country: ''
     });
   }
 
@@ -260,12 +271,6 @@ class Main extends Component {
       this.ratingSorting(this.state.rating, this.state.sorts);
       this.versionSorting(this.state.version, this.state.sorts);
     }
-  }
-
-  callFilters() {
-    this.ratingSorting(this.state.rating, this.state.sorts);
-    this.countrySorting(this.state.country, this.state.sorts);
-    this.versionSorting(this.state.version, this.state.sorts);
   }
 
   countryCount(cou) {
