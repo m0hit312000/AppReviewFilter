@@ -148,10 +148,6 @@
   margin-top: 20px;
 }
 
-.right {
-  transform: translate(0, 3px);
-}
-
 .rating_head {
   font-size: 14px;
 }
@@ -281,6 +277,26 @@
   font-size: 15px;
   color: gray;  
 }
+
+.cancel {
+  cursor: pointer;
+}
+
+.version_heading {
+  display: flex;
+  align-items: center;
+}
+
+.country_heading {
+  display: flex;
+  align-items: center;
+}
+
+.rating_heading {
+  display: flex;
+  align-items: center;
+}
+
 
 /* *********************************************** Review Card ************************************************ */
 

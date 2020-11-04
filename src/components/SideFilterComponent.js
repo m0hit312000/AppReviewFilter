@@ -2,11 +2,11 @@ import React from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import { MdDateRange } from 'react-icons/md';
 import { BsStarFill } from 'react-icons/bs';
-import { AiFillCaretRight } from 'react-icons/ai';
+import { AiFillCaretRight, AiFillCloseCircle } from 'react-icons/ai';
 import Progress from 'react-progressbar';
 
 
-const SideFilter = ({sorts, sorting, ratingCount, time, timeRangeSorting, ratingSorting, versionSorting, countrySorting, versionCount, countryCount, total}) => {
+const SideFilter = ({sorts, cancel, sorting, ratingCount, time, timeRangeSorting, ratingSorting, versionSorting, countrySorting, versionCount, countryCount, total}) => {
    return(
       <div className="side_filter">
           <div className="input_field">
@@ -24,7 +24,7 @@ const SideFilter = ({sorts, sorting, ratingCount, time, timeRangeSorting, rating
              </select>  
           </div>
           <div className="rating_filter">
-             <span className="rating_heading"><AiFillCaretRight className="right" size={17}/><label className="rating_head">Filter by Rating</label></span>
+             <span className="rating_heading"><AiFillCaretRight className="right" size={17}/><label className="rating_head">Filter by Rating</label><AiFillCloseCircle className="cancel" onClick={() => cancel('rating')} size={17} style={{marginLeft: "15px"}}/></span>
              <ul className="rating_list">
                 <li onClick={() => ratingSorting('5', sorts)}><div className="stars"><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/></div><Progress className="progress_bar" color="silver" completed={(ratingCount('5')/total)*100} /><div className="rat_value">{ratingCount('5')}</div></li>
                 <li onClick={() => ratingSorting('4', sorts)}><div className="stars"><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(255, 196, 0)"/><BsStarFill size={17} style={{marginRight: "5px"}} color="rgb(211, 211, 211)"/></div><Progress className="progress_bar" color="silver" completed={(ratingCount('4')/total)*100} /><div className="rat_value">{ratingCount('4')}</div></li>
@@ -34,7 +34,7 @@ const SideFilter = ({sorts, sorting, ratingCount, time, timeRangeSorting, rating
              </ul>   
           </div>
           <div className="version_filter">
-            <span className="version_heading"><AiFillCaretRight className="right" size={17}/> <label className="version_head">Filter by Version</label></span>
+            <span className="version_heading"><AiFillCaretRight className="right" size={17}/> <label className="version_head">Filter by Version</label><AiFillCloseCircle className="cancel" onClick={() => cancel('version')} size={17} style={{marginLeft: "15px"}} /></span>
             <ul className="version_list">
                <li onClick={() => versionSorting('v1.2.1', sorts)}><span className="ver_no">v1.2.1</span><Progress className="progress_bar" color="silver" completed={(versionCount('v1.2.1')/total)*100} /><div className="ver_value">{versionCount('v1.2.1')}</div></li>
                <li onClick={() => versionSorting('v0.1', sorts)}><span className="ver_no">v0.1</span> <Progress className="progress_bar" color="silver" completed={(versionCount('v0.1')/total)*100} /><div className="ver_value">{versionCount('v0.1')}</div></li>
@@ -46,7 +46,7 @@ const SideFilter = ({sorts, sorting, ratingCount, time, timeRangeSorting, rating
             </ul>
           </div>
           <div className="country_filter">
-            <span className="country_heading"><AiFillCaretRight className="right" size={17}/> <label className="country_head">Filter by Country</label></span>
+            <span className="country_heading"><AiFillCaretRight className="right" size={17}/> <label className="country_head">Filter by Country</label><AiFillCloseCircle className="cancel" onClick={() => cancel('country')} size={17} style={{marginLeft: "15px"}} /></span>
             <ul className="country_list">
                <li onClick={() => countrySorting('Australia', sorts)}><img className="flag" src={"/flags/png/Australia.png"} alt="Australia"></img><span className="flag_name">Australia</span><Progress className="progress_bar1" color="silver" completed={(countryCount('Australia')/total)*100} /><div className="cou_value">{countryCount('Australia')}</div></li>
                <li onClick={() => countrySorting('France', sorts)}><img className="flag" src={"/flags/png/France.png"} alt="France"></img><span className="flag_name">France</span><Progress className="progress_bar1" color="silver" completed={(countryCount('France')/total)*100} /><div className="cou_value">{countryCount('France')}</div></li>
